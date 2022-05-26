@@ -284,7 +284,7 @@ void write_block_bitmap(int fd) {
 
 	unsigned char *bitmap = malloc(BLOCK_SIZE);
 	for(int i=0;i<1024;i++)
-		bitmap[0] = 1;
+		bitmap[0] = 0;
 	write(fd, bitmap, BLOCK_SIZE);
 	free(bitmap);
 }
