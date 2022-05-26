@@ -282,9 +282,10 @@ void write_block_bitmap(int fd) {
 		errno_exit("lseek");
 	}
 
-	unsigned char bitmap[NUM_BLOCKS] = {0};
+	unsigned char *bitmap = malloc(BLOCK_SIZE);
 	bitmap[0],bitmap[1],bitmap[2],bitmap[3],bitmap[4],bitmap[20],bitmap[21],bitmap[22] = 1;
 	write(fd, bitmap, BLOCK_SIZE);
+	free(bitmap);
 }
 
 void write_inode_bitmap(int fd) {
