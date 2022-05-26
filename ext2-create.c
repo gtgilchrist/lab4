@@ -39,6 +39,8 @@ typedef int32_t i32;
 #define NUM_FREE_INODES (NUM_INODES - LAST_INO)
 
 #define EXT2_SUPER_MAGIC 0xEF53
+#define EXT2_VALID_FS 1
+#define EXT2_ERRORS_CONTINUE 1
 
 /* http://www.nongnu.org/ext2-doc/ext2.html */
 /* http://www.science.smith.edu/~nhowe/262/oldlabs/ext2.html */
@@ -214,11 +216,11 @@ void write_superblock(int fd) {
 	superblock.s_mnt_count         = 0; /* Number of times mounted so far */
 	superblock.s_max_mnt_count     = 0; /* Make this unlimited */
 	superblock.s_magic             = EXT2_SUPER_MAGIC; /* ext2 Signature */
-	superblock.s_state             = 0; /* File system is clean */
-	superblock.s_errors            = 0; /* Ignore the error (continue on) */
+	superblock.s_state             = EXT2_VALID_FS; /* File system is clean */
+	superblock.s_errors            = EXT2_ERRORS_CONTINUE; /* Ignore the error (continue on) */
 	superblock.s_minor_rev_level   = 0; /* Leave this as 0 */
 	superblock.s_lastcheck         = current_time; /* Last check time */
-	superblock.s_checkinterval     = 0; /* Force checks by making them every 1 second */
+	superblock.s_checkinterval     = 1; /* Force checks by making them every 1 second */
 	superblock.s_creator_os        = 0; /* Linux */
 	superblock.s_rev_level         = 0; /* Leave this as 0 */
 	superblock.s_def_resuid        = 0; /* root */
