@@ -276,10 +276,25 @@ void write_block_group_descriptor_table(int fd) {
 
 void write_block_bitmap(int fd) {
 	/* This is all you */
+	off_t off = BLOCK_OFFSET(BLOCK_BITMAP_BLOCKNO);
+	off = lseek(fd, off, SEEK_SET);
+	if(off == -1){
+		errno_exit("lseek");
+	}
+
+	unsigned char bitmap[NUM_BLOCKS] = {0};
+	bitmap[0],bitmap[1],bitmap[2],bitmap[3],bitmap[4],bitmap[20],bitmap[21],bitmap[22] = 1;
+	write(fd, bitmap, BLOCK_SIZE);
 }
 
 void write_inode_bitmap(int fd) {
 	/* This is all you */
+	off_t off = BLOCK_OFFSET(INODE_BITMAP_BLOCKNO);
+	off = lseek(fd, off, SEEK_SET);
+	if(off == -1){
+		errno_exit("lseek");
+	}
+
 }
 
 void write_inode(int fd, u32 index, struct ext2_inode *inode) {
@@ -340,6 +355,25 @@ void write_inode_table(int fd) {
 	hello_world_inode.i_blocks = 1;
 	hello_world_inode.i_block[0] = HELLO_WORLD_FILE_BLOCKNO;
 	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
+
+	struct ext2_inode symlink_hello_world_inode = {0};
+	symlink_hello_world_inode.i_mode = EXT2_S_IFLNK
+								| EXT2_S_IRUSR
+	                            | EXT2_S_IWUSR
+	                            | EXT2_S_IRGRP
+	                            | EXT2_S_IROTH;
+	symlink_hello_world_inode.i_uid = 1000;
+	symlink_hello_world_inode.i_size = 12;
+	symlink_hello_world_inode.i_atime = current_time;
+	symlink_hello_world_inode.i_ctime = current_time;
+	symlink_hello_world_inode.i_mtime = current_time;
+	symlink_hello_world_inode.i_dtime = 0;
+	symlink_hello_world_inode.i_gid = 1000;
+	symlink_hello_world_inode.i_links_count = 1;
+	symlink_hello_world_inode.i_blocks = 1;
+	symlink_hello_world_inode.i_block[0] = HELLO_WORLD_FILE_BLOCKNO;
+	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
+
 
 }
 
