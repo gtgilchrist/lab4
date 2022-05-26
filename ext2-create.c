@@ -198,8 +198,6 @@ void write_superblock(int fd) {
 
 	struct ext2_superblock superblock = {0};
 
-	/* These are intentionally incorrectly set as 0, you should set them
-	   correctly and delete this comment */
 	superblock.s_inodes_count      = NUM_INODES;
 	superblock.s_blocks_count      = NUM_BLOCKS;
 	superblock.s_r_blocks_count    = 0;
@@ -324,6 +322,25 @@ void write_inode_table(int fd) {
 
 	/* You should add your 3 other inodes in this function and delete this
 	   comment */
+
+	struct ext2_inode hello_world_inode = {0};
+	hello_world_inode.i_mode = EXT2_S_IFREG
+								| EXT2_S_IRUSR
+	                            | EXT2_S_IWUSR
+	                            | EXT2_S_IRGRP
+	                            | EXT2_S_IROTH;
+	hello_world_inode.i_uid = 1000;
+	hello_world_inode.i_size = 12;
+	hello_world_inode.i_atime = current_time;
+	hello_world_inode.i_ctime = current_time;
+	hello_world_inode.i_mtime = current_time;
+	hello_world_inode.i_dtime = 0;
+	hello_world_inode.i_gid = 1000;
+	hello_world_inode.i_links_count = 1;
+	hello_world_inode.i_blocks = 1;
+	hello_world_inode.i_block[0] = HELLO_WORLD_FILE_BLOCKNO;
+	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
+
 }
 
 void write_root_dir_block(int fd) {
@@ -358,6 +375,13 @@ void write_lost_and_found_dir_block(int fd) {
 
 void write_hello_world_file_block(int fd) {
 	/* This is all you */
+	off_t off = BLOCK_OFFSET(HELLO_WORLD_FILE_BLOCKNO);
+	off = lseek(fd, off, SEEK_SET);
+	if(off == -1){
+		errno_exit("lseek");
+	}
+
+	write(fd,"Hello World\n", 12);
 }
 
 int main(int argc, char *argv[]) {
