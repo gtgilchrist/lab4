@@ -337,6 +337,12 @@ void write_inode(int fd, u32 index, struct ext2_inode *inode) {
 void write_inode_table(int fd) {
 	u32 current_time = get_current_time();
 
+	off_t off = BLOCK_OFFSET(LOST_AND_FOUND_INO);
+	off = lseek(fd, off, SEEK_SET);
+	if(off == -1){
+		errno_exit("lseek");
+	}
+
 	struct ext2_inode lost_and_found_inode = {0};
 	lost_and_found_inode.i_mode = EXT2_S_IFDIR
 	                              | EXT2_S_IRUSR
@@ -361,6 +367,12 @@ void write_inode_table(int fd) {
 	/* You should add your 3 other inodes in this function and delete this
 	   comment */
 
+	off = BLOCK_OFFSET(EXT2_ROOT_INO);
+	off = lseek(fd, off, SEEK_SET);
+	if(off == -1){
+		errno_exit("lseek");
+	}
+
 	struct ext2_inode root_inode = {0};
 	root_inode.i_mode = EXT2_S_IFDIR
 								| EXT2_S_IRUSR
@@ -381,6 +393,12 @@ void write_inode_table(int fd) {
 	root_inode.i_blocks = 2;
 	root_inode.i_block[0] = ROOT_DIR_BLOCKNO;
 	write_inode(fd, ROOT_DIR_BLOCKNO, &root_inode);
+
+	off = BLOCK_OFFSET(HELLO_WORLD_INO);
+	off = lseek(fd, off, SEEK_SET);
+	if(off == -1){
+		errno_exit("lseek");
+	}
 
 	struct ext2_inode hello_world_inode = {0};
 	hello_world_inode.i_mode = EXT2_S_IFREG
