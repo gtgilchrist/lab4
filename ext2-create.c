@@ -283,6 +283,8 @@ void write_block_bitmap(int fd) {
 	}
 
 	unsigned char *bitmap = calloc(NUM_BLOCKS, sizeof(unsigned char));
+	for(int i = 128; i < 1024; i++)
+		bitmap[i] = 0x00;
 	write(fd, &bitmap, BLOCK_SIZE);
 	free(bitmap);
 }
