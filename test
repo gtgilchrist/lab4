@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mkdir mnt
+sudo mount -o loop cs111-base.img mnt
+cd mnt
+ls -ain
