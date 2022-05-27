@@ -420,7 +420,11 @@ void write_inode_table(int fd) {
 	symlink_hello_world_inode.i_gid = 1000;
 	symlink_hello_world_inode.i_links_count = 1;
 	symlink_hello_world_inode.i_blocks = 0;
-	memcpy(&symlink_hello_world_inode.i_block, "hello-world", 11);
+	unsigned char hello[11] = {"hello-world"};
+	for(int i=0;i<12;i++)
+		symlink_hello_world_inode.i_block[i] = hello[i];
+
+//	memcpy(&symlink_hello_world_inode.i_block, "hello-world", 11);
 	write_inode(fd, HELLO_INO, &symlink_hello_world_inode);
 
 }
