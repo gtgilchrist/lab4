@@ -309,7 +309,7 @@ void write_inode_bitmap(int fd) {
 		errno_exit("lseek");
 	}
 	
-	unsigned char bitmap[NUM_BLOCKS] = {0};
+	unsigned char bitmap[NUM_INODES] = {0};
 	bitmap[0] = FULL_BITMAP_BYTE;
 	bitmap[1] = FIRST_FIVE_BITMAP_BITS;
 	ssize_t size = sizeof(bitmap);
