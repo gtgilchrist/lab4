@@ -450,13 +450,13 @@ void write_root_dir_block(int fd) {
 	bytes_remaining -= lost_and_found_entry.rec_len;
 
 	struct ext2_dir_entry hello_world_entry = {0};
-	dir_entry_set(hello_world_entry, HELLO_WORLD_INO, "Hello World");
+	dir_entry_set(hello_world_entry, HELLO_WORLD_INO, "hello-world");
 	dir_entry_write(hello_world_entry, fd);
 
 	bytes_remaining -= hello_world_entry.rec_len;
 
 	struct ext2_dir_entry symlink_hello_world_entry = {0};
-	dir_entry_set(symlink_hello_world_entry, HELLO_INO, "Hello");
+	dir_entry_set(symlink_hello_world_entry, HELLO_INO, "hello");
 	dir_entry_write(symlink_hello_world_entry, fd);
 
 	bytes_remaining -= symlink_hello_world_entry.rec_len;
