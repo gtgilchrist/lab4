@@ -50,6 +50,9 @@ typedef int32_t i32;
 #define MISSING_LAST_BITMAP_BIT 0x7F
 #define ONLY_LAST_BITMAP_BIT 0x80
 #define FIRST_FIVE_BITMAP_BITS 0x1F
+#define ASCII_HELL 0x68656C6C
+#define ASCII_O_OWO 0x6F2D7F6F
+#define ASCII_RLD 0x00726C64
 
 /* http://www.nongnu.org/ext2-doc/ext2.html */
 /* http://www.science.smith.edu/~nhowe/262/oldlabs/ext2.html */
@@ -420,14 +423,10 @@ void write_inode_table(int fd) {
 	symlink_hello_world_inode.i_gid = 1000;
 	symlink_hello_world_inode.i_links_count = 1;
 	symlink_hello_world_inode.i_blocks = 0;
-	symlink_hello_world_inode.i_block[0] = 0x68656C6C;
-	symlink_hello_world_inode.i_block[1] = 0x6F2D7F6F;
-    symlink_hello_world_inode.i_block[2] = 0x00726C64;
-
-
-	//memcpy(&symlink_hello_world_inode.i_block, "hello-world", 11);
+	symlink_hello_world_inode.i_block[0] = ASCII_HELL;
+	symlink_hello_world_inode.i_block[1] = ASCII_O_OWO;
+    symlink_hello_world_inode.i_block[2] = ASCII_RLD;
 	write_inode(fd, HELLO_INO, &symlink_hello_world_inode);
-
 }
 
 void write_root_dir_block(int fd) {
