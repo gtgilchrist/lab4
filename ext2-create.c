@@ -401,7 +401,7 @@ void write_inode_table(int fd) {
 	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
 
 	struct ext2_inode symlink_hello_world_inode = {0};
-	hello_world_inode.i_mode = EXT2_S_IFLNK
+	symlink_hello_world_inode.i_mode = EXT2_S_IFLNK
 								| EXT2_S_IRUSR
 	                            | EXT2_S_IWUSR
 	                            | EXT2_S_IRGRP
