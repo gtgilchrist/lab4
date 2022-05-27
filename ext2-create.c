@@ -20,6 +20,9 @@ typedef int32_t i32;
 #define NUM_BLOCKS 1024
 #define NUM_INODES 128
 #define NUM_DIRECTORIES 2
+#define NUM_INODE_BITMAP 1024
+#define NUM_BLOCKS_BITMAP NUM_BLOCKS
+
 
 #define LOST_AND_FOUND_INO 11
 #define HELLO_WORLD_INO    12
@@ -288,7 +291,7 @@ void write_block_bitmap(int fd) {
 		errno_exit("lseek");
 	}
 
-	unsigned char bitmap[NUM_BLOCKS] = {0};
+	unsigned char bitmap[NUM_BLOCKS_BITMAP] = {0};
 	for(int i = 128; i < 1024; i++)
 		bitmap[i] = FULL_BITMAP_BYTE;
 	bitmap[0] = FULL_BITMAP_BYTE;
@@ -309,7 +312,7 @@ void write_inode_bitmap(int fd) {
 		errno_exit("lseek");
 	}
 	
-	unsigned char bitmap[NUM_INODES*sizeof(unsigned char)] = {0};
+	unsigned char bitmap[NUM_INODE_BITMAP] = {0};
 	//for(int i = 18; i < 1024; i++)
 	//	bitmap[i] = FULL_BITMAP_BYTE;
 	bitmap[0] = FULL_BITMAP_BYTE;
