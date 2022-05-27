@@ -313,8 +313,8 @@ void write_inode_bitmap(int fd) {
 	}
 	
 	unsigned char bitmap[NUM_INODE_BITMAP] = {0};
-	//for(int i = 18; i < 1024; i++)
-	//	bitmap[i] = FULL_BITMAP_BYTE;
+	for(int i = 16; i < 1024; i++)
+		bitmap[i] = FULL_BITMAP_BYTE;
 	bitmap[0] = FULL_BITMAP_BYTE;
 	bitmap[1] = FIRST_FIVE_BITMAP_BITS;
 	ssize_t size = sizeof(bitmap);
