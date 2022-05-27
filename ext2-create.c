@@ -42,6 +42,11 @@ typedef int32_t i32;
 #define EXT2_VALID_FS 1
 #define EXT2_ERRORS_CONTINUE 1
 
+#define FULL_BITMAP_BYTE 0xFF
+#define MISSING_LAST_BITMAP_BIT 0x7F
+#define ONLY_LAST_BITMAP_BIT 0x80
+#define FIRST_FIVE_BITMAP_BITS 0x1F
+
 /* http://www.nongnu.org/ext2-doc/ext2.html */
 /* http://www.science.smith.edu/~nhowe/262/oldlabs/ext2.html */
 
@@ -284,11 +289,11 @@ void write_block_bitmap(int fd) {
 
 	unsigned char bitmap[NUM_BLOCKS] = {0};
 	for(int i = 128; i < 1024; i++)
-		bitmap[i] = 0xFF;
-	bitmap[0] = 0xFF;
-	bitmap[1] = 0xFF;
-	bitmap[2] = 0x7F;
-	bitmap[127] = 0x80;
+		bitmap[i] = FULL_BITMAP_BYTE;
+	bitmap[0] = FULL_BITMAP_BYTE;
+	bitmap[1] = FULL_BITMAP_BYTE;
+	bitmap[2] = MISSING_LAST_BITMAP_BIT;
+	bitmap[127] = ONLY_LAST_BITMAP_BIT;
 	ssize_t size = sizeof(bitmap);
 	if(write(fd, bitmap, size) != size){
 		errno_exit("write");
@@ -304,8 +309,8 @@ void write_inode_bitmap(int fd) {
 	}
 	
 	unsigned char bitmap[NUM_INODES] = {0};
-	bitmap[0] = 0xFF;
-	bitmap[1] = 0x1F;
+	bitmap[0] = FULL_BITMAP_BYTE;
+	bitmap[1] = FIRST_FIVE_BITMAP_BITS;
 	ssize_t size = sizeof(bitmap);
 	if(write(fd, bitmap, size) != size){
 		errno_exit("write");
