@@ -282,7 +282,7 @@ void write_block_bitmap(int fd) {
 		errno_exit("lseek");
 	}
 
-	unsigned char *bitmap = calloc(NUM_BLOCKS, sizeof(unsigned char));
+	unsigned char bitmap[NUM_BLOCKS] = {0};
 	for(int i = 128; i < 1024; i++)
 		bitmap[i] = 0xFF;
 	bitmap[0] = 0xFF;
@@ -293,7 +293,6 @@ void write_block_bitmap(int fd) {
 	if(write(fd, bitmap, size) != size){
 		errno_exit("write");
 	}
-	free(bitmap);
 }
 
 void write_inode_bitmap(int fd) {
