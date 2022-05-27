@@ -423,7 +423,7 @@ void write_inode_table(int fd) {
 	symlink_hello_world_inode.i_gid = 1000;
 	symlink_hello_world_inode.i_links_count = 1;
 	symlink_hello_world_inode.i_blocks = 0;
-	symlink_hello_world_inode.i_block[0] = 0x68656C6C;
+	symlink_hello_world_inode.i_block[0] = 0x6C6C6568;
 	symlink_hello_world_inode.i_block[1] = 0x6F2D776F;
     symlink_hello_world_inode.i_block[2] = 0x00726C64;
 	write_inode(fd, HELLO_INO, &symlink_hello_world_inode);
