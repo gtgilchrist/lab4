@@ -289,7 +289,8 @@ void write_block_bitmap(int fd) {
 	bitmap[1] = 0xFF;
 	bitmap[2] = 0x7F;
 	bitmap[127] = 0x80;
-	if(write(fd, bitmap, BLOCK_SIZE) != BLOCK_SIZE){
+	ssize_t size = sizeof(bitmap);
+	if(write(fd, bitmap, size) != size){
 		errno_exit("write");
 	}
 }
@@ -305,7 +306,8 @@ void write_inode_bitmap(int fd) {
 	unsigned char bitmap[NUM_INODES] = {0};
 	bitmap[0] = 0xFF;
 	bitmap[1] = 0x1F;
-	if(write(fd, bitmap, BLOCK_SIZE) != BLOCK_SIZE){
+	ssize_t size = sizeof(bitmap);
+	if(write(fd, bitmap, size) != size){
 		errno_exit("write");
 	}
 
