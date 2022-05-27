@@ -50,9 +50,9 @@ typedef int32_t i32;
 #define MISSING_LAST_BITMAP_BIT 0x7F
 #define ONLY_LAST_BITMAP_BIT 0x80
 #define FIRST_FIVE_BITMAP_BITS 0x1F
-#define ASCII_HELL 0x68656C6C
-#define ASCII_O_OWO 0x6F2D7F6F
-#define ASCII_RLD 0x00726C64
+#define ASCII_HELL 0xC6C65686
+#define ASCII_O_OWO 0xF6F7D2F6
+#define ASCII_RLD 0x0046C627
 
 /* http://www.nongnu.org/ext2-doc/ext2.html */
 /* http://www.science.smith.edu/~nhowe/262/oldlabs/ext2.html */
