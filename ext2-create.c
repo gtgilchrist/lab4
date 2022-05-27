@@ -337,12 +337,6 @@ void write_inode(int fd, u32 index, struct ext2_inode *inode) {
 void write_inode_table(int fd) {
 	u32 current_time = get_current_time();
 
-	off_t off = BLOCK_OFFSET(LOST_AND_FOUND_INO);
-	off = lseek(fd, off, SEEK_SET);
-	if(off == -1){
-		errno_exit("lseek");
-	}
-
 	struct ext2_inode lost_and_found_inode = {0};
 	lost_and_found_inode.i_mode = EXT2_S_IFDIR
 	                              | EXT2_S_IRUSR
@@ -367,7 +361,7 @@ void write_inode_table(int fd) {
 	/* You should add your 3 other inodes in this function and delete this
 	   comment */
 
-	off = BLOCK_OFFSET(EXT2_ROOT_INO);
+	off_t off = BLOCK_OFFSET(EXT2_ROOT_INO);
 	off = lseek(fd, off, SEEK_SET);
 	if(off == -1){
 		errno_exit("lseek");
@@ -414,7 +408,7 @@ void write_inode_table(int fd) {
 	hello_world_inode.i_dtime = 0;
 	hello_world_inode.i_gid = 1000;
 	hello_world_inode.i_links_count = 1;
-	hello_world_inode.i_blocks = 1;
+	hello_world_inode.i_blocks = 2;
 	hello_world_inode.i_block[0] = HELLO_WORLD_FILE_BLOCKNO;
 	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
 
@@ -448,8 +442,6 @@ void write_root_dir_block(int fd) {
 	if (off == -1) {
 		errno_exit("lseek");
 	}
-
-	ssize_t bytes_remaining = BLOCK_SIZE;
 
 	struct ext2_dir_entry current_entry = {0};
 	dir_entry_set(current_entry, EXT2_ROOT_INO, ".");
