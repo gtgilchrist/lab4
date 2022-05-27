@@ -501,7 +501,7 @@ void write_hello_world_file_block(int fd) {
 		errno_exit("lseek");
 	}
 
-	write(fd,"Hello World\n", 12);
+	write(fd,"Hello world\n", 12);
 }
 
 int main(int argc, char *argv[]) {
