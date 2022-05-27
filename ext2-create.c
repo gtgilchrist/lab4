@@ -416,7 +416,7 @@ void write_inode_table(int fd) {
 	symlink_hello_world_inode.i_links_count = 1;
 	symlink_hello_world_inode.i_blocks = 0;
 	memcpy(&symlink_hello_world_inode.i_block, "hello-world", 11);
-	write_inode(fd, HELLO_INO, &hello_world_inode);
+	write_inode(fd, HELLO_INO, &symlink_hello_world_inode);
 
 }
 
