@@ -456,8 +456,8 @@ void write_root_dir_block(int fd) {
 	dir_entry_write(lost_and_found_entry, fd);
 
 	struct ext2_dir_entry hello_world_entry = {0};
-	dir_entry_set(lost_and_found_entry, HELLO_WORLD_INO, "Hello World");
-	dir_entry_write(lost_and_found_entry, fd);
+	dir_entry_set(hello_world_entry, HELLO_WORLD_INO, "Hello World");
+	dir_entry_write(hello_world_entry, fd);
 
 }
 
