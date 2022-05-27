@@ -19,6 +19,7 @@ typedef int32_t i32;
 #define BLOCK_OFFSET(i) (i * BLOCK_SIZE)
 #define NUM_BLOCKS 1024
 #define NUM_INODES 128
+#define NUM_DIRECTORIES 2
 
 #define LOST_AND_FOUND_INO 11
 #define HELLO_WORLD_INO    12
@@ -266,12 +267,12 @@ void write_block_group_descriptor_table(int fd) {
 
 	/* These are intentionally incorrectly set as 0, you should set them
 	   correctly and delete this comment */
-	block_group_descriptor.bg_block_bitmap = 3;
-	block_group_descriptor.bg_inode_bitmap = 4;
-	block_group_descriptor.bg_inode_table = 5;
+	block_group_descriptor.bg_block_bitmap = BLOCK_BITMAP_BLOCKNO;
+	block_group_descriptor.bg_inode_bitmap = INODE_BITMAP_BLOCKNO;
+	block_group_descriptor.bg_inode_table = INODE_TABLE_BLOCKNO;
 	block_group_descriptor.bg_free_blocks_count = NUM_FREE_BLOCKS;
 	block_group_descriptor.bg_free_inodes_count = NUM_FREE_INODES;
-	block_group_descriptor.bg_used_dirs_count = 2;
+	block_group_descriptor.bg_used_dirs_count = NUM_DIRECTORIES;
 
 	ssize_t size = sizeof(block_group_descriptor);
 	if (write(fd, &block_group_descriptor, size) != size) {
