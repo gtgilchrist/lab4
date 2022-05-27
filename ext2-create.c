@@ -362,11 +362,14 @@ void write_inode_table(int fd) {
 	   comment */
 
 	struct ext2_inode root_inode = {0};
-	root_inode.i_mode = EXT2_S_IFREG
+	root_inode.i_mode = EXT2_S_IFDIR
 								| EXT2_S_IRUSR
 	                            | EXT2_S_IWUSR
+								| EXT2_S_IXUSR
 	                            | EXT2_S_IRGRP
-	                            | EXT2_S_IROTH;
+								| EXT2_S_IXGRP
+	                            | EXT2_S_IROTH
+								| EXT2_S_IXOTH;
 	root_inode.i_uid = 0;
 	root_inode.i_size = 1024;
 	root_inode.i_atime = current_time;
