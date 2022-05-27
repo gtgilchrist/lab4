@@ -288,7 +288,7 @@ void write_block_bitmap(int fd) {
 	bitmap[0] = 0xFF;
 	bitmap[1] = 0xFF;
 	bitmap[2] = 0x7F;
-	bitmap[127] = 0x7F;
+	bitmap[127] = 0x80;
 	ssize_t size = BLOCK_SIZE;
 	if(write(fd, bitmap, size) != size){
 		errno_exit("write");
