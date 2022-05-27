@@ -4,5 +4,4 @@ make clean
 git pull
 make && ./ext2-create
 dumpe2fs cs111-base.img
-fsck.ext2 cs111-base.img
 
