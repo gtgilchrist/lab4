@@ -407,7 +407,7 @@ void write_inode_table(int fd) {
 	                            | EXT2_S_IRGRP
 	                            | EXT2_S_IROTH;
 	symlink_hello_world_inode.i_uid = 1000;
-	symlink_hello_world_inode.i_size = 12;
+	symlink_hello_world_inode.i_size = 11;
 	symlink_hello_world_inode.i_atime = current_time;
 	symlink_hello_world_inode.i_ctime = current_time;
 	symlink_hello_world_inode.i_mtime = current_time;
